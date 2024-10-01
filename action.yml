@@ -39,20 +39,21 @@ runs:
       shell: bash
       run: |
         echo "Setting up CLI V2"
-        alias codacy-cli-v2=bash <(curl -Ls https://raw.githubusercontent.com/codacy/codacy-cli-v2/main/codacy-cli.sh)
+        curl -Ls https://raw.githubusercontent.com/codacy/codacy-cli-v2/main/codacy-cli.sh -o /tmp/codacy-cli-v2
+        chmod +x /tmp/codacy-cli-v2
         echo "CLI V2 setup complete"
     - name: "Run the tool"
       shell: bash
       run: |
         echo "Running the tool"
-        codacy-cli-v2 analyze -t ${{inputs.tool}} -o ${{inputs.sarif_file_path}}
+        /tmp/codacy-cli-v2 analyze -t ${{inputs.tool}} -o ${{inputs.sarif_file_path}}
         echo "Tool run complete"
     - name: "Upload the results"
       shell: bash
       run: |
         if [ "$upload_report" == "true" ]; then
           echo "Uploading the results"
-          codacy-cli-v2 upload -s ${{inputs.sarif_file_path}} -c $COMMIT_SHA -t ${{inputs.project_token}}
+          /tmp/codacy-cli-v2 upload -s ${{inputs.sarif_file_path}} -c $COMMIT_SHA -t ${{inputs.project_token}}
           echo "Results uploaded"
         else
           echo "Upload skipped"
