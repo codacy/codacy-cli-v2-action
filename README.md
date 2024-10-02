@@ -37,7 +37,7 @@ Details can be found [here](https://github.com/codacy/codacy-cli-v2).
 steps:
 # ...
     - name: Run Codacy CLI
-        uses: codacy/codacy-cli-v2-action@tests
+        uses: codacy/codacy-cli-v2-action@main
         with:
           project_token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           tool: eslint
