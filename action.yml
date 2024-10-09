@@ -26,8 +26,23 @@ inputs:
     required: true
     description: >-
       The project token to use for the analysis.
-    
-
+  api_token:
+    required: false
+    description: >-
+      User level token for Codacy API.
+  provider:
+    required: false
+    description: >-
+      Provider name (e.g., gh, gl, bb).
+  owner:
+    required: false
+    description: >-
+      Repository owner.
+  repository:
+    required: false
+    description: >-
+      Repository name.
+  
 runs:
   using: "composite"
   steps:
@@ -54,7 +69,13 @@ runs:
       run: |
         if [ "${{ inputs.upload_report }}" == "true" ]; then
           echo "Uploading the results"
-          /tmp/codacy-cli-v2 upload -s ${{inputs.sarif_file_path}} -c $COMMIT_SHA -t ${{inputs.project_token}}
+           if [ "${{ inputs.project_token }}" == "" ]; then
+            echo "Using API token"
+            /tmp/codacy-cli-v2 upload -s ${{inputs.sarif_file_path}} -c $COMMIT_SHA -a ${{inputs.api_token}} -p ${{inputs.provider}} -o ${{inputs.owner}} -r ${{inputs.repository}}
+           else
+            echo "Using project token"
+            /tmp/codacy-cli-v2 upload -s ${{inputs.sarif_file_path}} -c $COMMIT_SHA -t ${{inputs.project_token}}
+           fi
           echo "Results uploaded"
         else
           echo "Upload skipped"
