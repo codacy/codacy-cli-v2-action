@@ -76,7 +76,7 @@ runs:
           cat ${{inputs.sarif_file_path}}
            if [ "${{ inputs.project_token }}" == "" ]; then
             echo "Using API token"
-            /tmp/codacy-cli-v2 upload -s ${{inputs.sarif_file_path}} -c $COMMIT_SHA -a ${{inputs.api_token}} --provider gh -o ${{inputs.owner}} -r ${{inputs.repository}}
+            /tmp/codacy-cli-v2 upload -s ${{inputs.sarif_file_path}} -c $COMMIT_SHA -p sh  -o ${{inputs.owner}} -r ${{inputs.repository}} -a ${{inputs.api_token}}
            else
             echo "Using project token"
             /tmp/codacy-cli-v2 upload -s ${{inputs.sarif_file_path}} -c $COMMIT_SHA -t ${{inputs.project_token}}
