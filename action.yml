@@ -34,6 +34,7 @@ inputs:
     required: false
     description: >-
       Provider name (e.g., gh, gl, bb).
+    default: gh
   owner:
     required: false
     description: >-
@@ -69,9 +70,13 @@ runs:
       run: |
         if [ "${{ inputs.upload_report }}" == "true" ]; then
           echo "Uploading the results"
+          echo "Cleaning path"
+          sed -i.bak "s|$(pwd)/||g" ${{inputs.sarif_file_path}}
+          sed -i.bak "s|file://||g" ${{inputs.sarif_file_path}}
+          cat ${{inputs.sarif_file_path}}
            if [ "${{ inputs.project_token }}" == "" ]; then
             echo "Using API token"
-            /tmp/codacy-cli-v2 upload -s ${{inputs.sarif_file_path}} -c $COMMIT_SHA -a ${{inputs.api_token}} -p ${{inputs.provider}} -o ${{inputs.owner}} -r ${{inputs.repository}}
+            /tmp/codacy-cli-v2 upload -s ${{ inputs.sarif_file_path }} -c $COMMIT_SHA -p gh -o ${{ inputs.owner }} -r ${{ inputs.repository }} -a ${{ inputs.api_token }}
            else
             echo "Using project token"
             /tmp/codacy-cli-v2 upload -s ${{inputs.sarif_file_path}} -c $COMMIT_SHA -t ${{inputs.project_token}}
