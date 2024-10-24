@@ -70,13 +70,14 @@ runs:
         if [ "${{ inputs.upload_report }}" == "true" ]; then
           echo "Uploading the results"
           echo "Cleaning path"
-          cat ${{inputs.sarif_file_path}}.sarif | sed "s|$(pwd)/||g" | sed "s|file://||g" > codacy-${{inputs.sarif_file_path}}.sarif
+          sed -i "s|$(pwd)/||g" ${{inputs.sarif_file_path}}.sarif
+          sed -i "s|file://||g" ${{inputs.sarif_file_path}}.sarif
            if [ "${{ inputs.project_token }}" == "" ]; then
             echo "Using API token"
-            /tmp/codacy-cli-v2 upload -s codacy-${{inputs.sarif_file_path}} -c $COMMIT_SHA -a ${{inputs.api_token}} -p ${{inputs.provider}} -o ${{inputs.owner}} -r ${{inputs.repository}}
+            /tmp/codacy-cli-v2 upload -s ${{inputs.sarif_file_path}} -c $COMMIT_SHA -a ${{inputs.api_token}} -p ${{inputs.provider}} -o ${{inputs.owner}} -r ${{inputs.repository}}
            else
             echo "Using project token"
-            /tmp/codacy-cli-v2 upload -s codacy-${{inputs.sarif_file_path}} -c $COMMIT_SHA -t ${{inputs.project_token}}
+            /tmp/codacy-cli-v2 upload -s ${{inputs.sarif_file_path}} -c $COMMIT_SHA -t ${{inputs.project_token}}
            fi
           echo "Results uploaded"
         else
