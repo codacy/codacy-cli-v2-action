@@ -34,6 +34,7 @@ inputs:
     required: false
     description: >-
       Provider name (e.g., gh, gl, bb).
+    default: gh
   owner:
     required: false
     description: >-
