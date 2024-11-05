@@ -42,6 +42,11 @@ inputs:
     required: false
     description: >-
       Repository name.
+  registry:
+    required: false
+    default: ""
+    description: >-
+      Eventual registry address.
   
 runs:
   using: "composite"
@@ -56,7 +61,11 @@ runs:
         echo "Setting up CLI V2"
         curl -Ls https://raw.githubusercontent.com/codacy/codacy-cli-v2/main/codacy-cli.sh -o /tmp/codacy-cli-v2
         chmod +x /tmp/codacy-cli-v2
-        /tmp/codacy-cli-v2 install
+        if [ "${{ inputs.registry }}" != "" ]; then
+          /tmp/codacy-cli-v2 install -r ${{ inputs.registry }}
+        else
+          /tmp/codacy-cli-v2 install
+        fi
         echo "CLI V2 setup complete"
     - name: "Run the tool"
       shell: bash
