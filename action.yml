@@ -71,7 +71,7 @@ runs:
       shell: bash
       run: |
         echo "Running the tool"
-        /tmp/codacy-cli-v2 analyze -t ${{inputs.tool}} -o ${{inputs.sarif_file_path}}
+        /tmp/codacy-cli-v2 analyze -t ${{inputs.tool}} --format sarif -o ${{inputs.sarif_file_path}}
         echo "Tool run complete"
     - name: "Upload the results"
       shell: bash
