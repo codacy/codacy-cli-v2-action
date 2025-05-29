@@ -50,6 +50,6 @@ steps:
 | Input | Required | Default | Description |
 | ----- | -------- | ------- | ----------- |
 | `project_token` | Yes | - | The project token for your Codacy project. |
-| `tool` | Yes | - | The tool to use for analysis. |
+| `tool` | No | - | The tool to use for analysis. |
 | `upload_report` | No | false | Whether to upload the report to Codacy. |
 | `sarif_file_path` | No | "./report.sarif" | The path to the SARIF file to upload. |
