@@ -47,8 +47,8 @@ steps:
 
 ## Inputs
 
-| Input | Required | Default | Description                   |
-| ----- | -------- | ------ |-------------------------------|
+| Input | Required | Default | Description |
+| ----- | -------- | ------- | ----------- |
 | `project_token` | Yes | - | The project token for your Codacy project. |
 | `tool` | Yes | eslint | The tool to use for analysis. |
 | `upload_report` | No | false | Whether to upload the report to Codacy. |
