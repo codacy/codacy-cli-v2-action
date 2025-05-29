@@ -11,7 +11,7 @@ inputs:
     description: >-
       Only run a specific tool or tool category (eslint, stylelint, etc).
       For the full list of tools, see https://docs.codacy.com/repositories-configure/codacy-configuration-file/#which-tools-can-be-configured-and-which-name-should-i-use
-      default: "eslint"
+    default: "eslint"
   sarif_file_path:
     required: false
     description: >-
