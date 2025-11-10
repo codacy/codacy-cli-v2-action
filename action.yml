@@ -47,6 +47,10 @@ inputs:
     default: ""
     description: >-
       Eventual registry address.
+  directory:
+    required: false
+    description: >-
+      Directory to analyze
   
 runs:
   using: "composite"
@@ -71,7 +75,10 @@ runs:
       shell: bash
       run: |
         echo "Running the tool"
-        /tmp/codacy-cli-v2 analyze -t ${{inputs.tool}} --format sarif -o ${{inputs.sarif_file_path}}
+        if [ "${{ inputs.directory }}" != "" ]; then
+          /tmp/codacy-cli-v2 analyze -t ${{inputs.tool}} ${{inputs.directory}} --format sarif -o ${{inputs.sarif_file_path}}
+        else
+          /tmp/codacy-cli-v2 analyze -t ${{inputs.tool}} --format sarif -o ${{inputs.sarif_file_path}}
         echo "Tool run complete"
     - name: "Upload the results"
       shell: bash
