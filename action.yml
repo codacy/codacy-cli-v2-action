@@ -62,7 +62,7 @@ runs:
         curl -Ls https://raw.githubusercontent.com/codacy/codacy-cli-v2/main/codacy-cli.sh -o /tmp/codacy-cli-v2
         chmod +x /tmp/codacy-cli-v2
         if [ "${{ inputs.api_token }}" != "" ]; then
-          /tmp/codacy-cli-v2 init --api-token ${{inputs.api_token}} --provider ${{inputs.provider}} --organization ${{inputs.organization}} --repository ${{inputs.repository}}
+          /tmp/codacy-cli-v2 init --api-token ${{inputs.api_token}} --provider ${{inputs.provider}} --organization ${{inputs.owner}} --repository ${{inputs.repository}}
         fi
         if [ "${{ inputs.registry }}" != "" ]; then
           /tmp/codacy-cli-v2 install -r ${{ inputs.registry }}
@@ -75,7 +75,7 @@ runs:
       run: |
         echo "Running the tool"
         if [ "${{ inputs.api_token }}" != "" ]; then
-          /tmp/codacy-cli-v2 analyze -t ${{inputs.tool}} ${{inputs.directory}} --format sarif -o ${{inputs.sarif_file_path}} --api-token ${{inputs.api_token}} --provider ${{inputs.provider}} --organization ${{inputs.organization}} --repository ${{inputs.repository}}
+          /tmp/codacy-cli-v2 analyze -t ${{inputs.tool}} ${{inputs.directory}} --format sarif -o ${{inputs.sarif_file_path}} --api-token ${{inputs.api_token}} --provider ${{inputs.provider}} --organization ${{inputs.owner}} --repository ${{inputs.repository}}
         else
           /tmp/codacy-cli-v2 analyze -t ${{inputs.tool}} --format sarif -o ${{inputs.sarif_file_path}}
         fi
