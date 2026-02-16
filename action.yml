@@ -47,11 +47,11 @@ inputs:
     default: ""
     description: >-
       Eventual registry address.
-  eslint_config_path:
+  tool_config_path:
     required: false
     default: ""
     description: >-
-      Path to the ESLint configuration file to use for the analysis. If not provided, the action will rely on the default configuration provided by Codacy CLI V2.
+      Path to the tool configuration file to use for the analysis. If not provided, the action will rely on the default configuration provided by Codacy CLI V2.
   
 runs:
   using: "composite"
@@ -69,9 +69,9 @@ runs:
         if [ "${{ inputs.api_token }}" != "" ]; then
           /tmp/codacy-cli-v2 init --api-token ${{inputs.api_token}} --provider ${{inputs.provider}} --organization ${{inputs.owner}} --repository ${{inputs.repository}}
         fi
-        if [ "${{ inputs.eslint_config_path }}" != "" ]; then
+        if [ "${{ inputs.tool_config_path }}" != "" ]; then
           /tmp/codacy-cli-v2 init
-          mv ${{ inputs.eslint_config_path }} ./.codacy/tools-configs/
+          mv ${{ inputs.tool_config_path }} ./.codacy/tools-configs/
         fi
         if [ "${{ inputs.registry }}" != "" ]; then
           /tmp/codacy-cli-v2 install -r ${{ inputs.registry }}
