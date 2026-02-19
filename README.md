@@ -53,4 +53,4 @@ steps:
 | `tool` | Yes | - | The tool to use for analysis. |
 | `upload_report` | No | false | Whether to upload the report to Codacy. |
 | `sarif_file_path` | No | "./report.sarif" | The path to the SARIF file to upload. |
-| `tool_file_path` | No | - | The path to the tool configuration file you need for the analysis. |
+| `tool_config_path` | No | - | The path to the tool configuration file you need for the analysis. |
